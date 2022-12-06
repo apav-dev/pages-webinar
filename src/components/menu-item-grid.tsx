@@ -9,7 +9,7 @@ interface MenuItemListProps {
   }[];
 }
 
-const MenuItemList = ({ title, menuItems }: MenuItemListProps): JSX.Element => {
+const MenuItemGrid = ({ title, menuItems }: MenuItemListProps): JSX.Element => {
   if (!menuItems) {
     return <></>;
   }
@@ -47,4 +47,4 @@ const MenuItemList = ({ title, menuItems }: MenuItemListProps): JSX.Element => {
   );
 };
 
-export default MenuItemList;
+export default MenuItemGrid;

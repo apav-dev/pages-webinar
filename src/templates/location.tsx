@@ -31,7 +31,7 @@ import Favicon from "../public/yext-favicon.ico";
 import { ExternalWeather } from "../types/ExternalWeather";
 import "../index.css";
 import Cta from "../components/cta";
-import MenuItemList from "../components/menu-item-list";
+import MenuItemGrid from "../components/menu-item-grid";
 
 /**
  * Required when Knowledge Graph data is used for a template.
@@ -53,9 +53,6 @@ export const config: TemplateConfig = {
       "slug",
       "geocodedCoordinate",
       "services",
-      "neighborhood",
-      "c_featuredMenuItems.name",
-      "c_featuredMenuItems.photoGallery",
       "c_coverPhoto",
     ],
     // Defines the scope of entities that qualify for this stream.
@@ -185,8 +182,6 @@ const Location: Template<LocationRenderData> = ({
     geocodedCoordinate,
     services,
     description,
-    neighborhood,
-    c_featuredMenuItems,
     c_coverPhoto,
   } = document;
 
@@ -202,9 +197,7 @@ const Location: Template<LocationRenderData> = ({
         <Banner coverPhoto={coverPhoto}>
           <div>
             <h1 className="text-white text-3xl font-semibold">{name}</h1>
-            <h2 className="text-white text-3xl font-semibold">
-              {neighborhood}
-            </h2>
+            {/* neighborhood */}
             {address && (
               <p className="text-lg pt-2 text-white font-semibold">
                 <span>
@@ -235,12 +228,7 @@ const Location: Template<LocationRenderData> = ({
         <div className="centered-container">
           <div className="section">
             <div className="grid grid-cols-2 gap-x-10 gap-y-10">
-              <div className="col-span-2">
-                <MenuItemList
-                  title="Featured Menu Items"
-                  menuItems={c_featuredMenuItems}
-                />
-              </div>
+              {/* menuitems */}
               <div className="bg-gray-100 p-2">
                 <Details address={address} phone={mainPhone}></Details>
                 {services && <List list={services}></List>}

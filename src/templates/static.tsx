@@ -16,9 +16,8 @@ import PageLayout from "../components/page-layout";
 import Favicon from "../public/yext-favicon.ico";
 import Banner from "../components/banner";
 import SearchExperience from "../components/search/search-experience";
-import { FilterSearch, OnSelectParams, SearchBar } from "@yext/search-ui-react";
-import { provideHeadless, SandboxEndpoints } from "@yext/search-headless-react";
-import EntityPreviews from "../components/search/EntityPreviews";
+import { FilterSearch, OnSelectParams } from "@yext/search-ui-react";
+import { handleFilterSelect } from "../utils/handleFilterSelect";
 
 /**
  * Not required depending on your use case.
@@ -74,36 +73,6 @@ export const getHeadConfig: GetHeadConfig<TemplateRenderProps> = ({
   };
 };
 
-const entityPreviewSearcher = provideHeadless({
-  apiKey: "797c677bfccd5cea5e3a63f9ec67928a",
-  experienceKey: "turtlehead",
-  locale: "en",
-  endpoints: SandboxEndpoints,
-  headlessId: "entity-preview-searcher",
-});
-
-const reviewsPath =
-  "https://streams-sbx.yext.com/v2/accounts/me/api/locationByNeighborhood";
-
-export const fetchSlugForLocationByNeighborhood = async (
-  neighborhood: string
-) => {
-  const requestString = `${reviewsPath}?api_key=0ba9ba83014a28b9c446292127846451&v=20221114&neighborhood=${neighborhood}`;
-
-  try {
-    const resp = await fetch(requestString);
-    const locationsResponse = await resp.json();
-    if (locationsResponse?.response?.docs.length > 0) {
-      const locationSlug = locationsResponse.response.docs[0].slug;
-
-      // change the path to the location page with window.location
-      window.location.href = `/${locationSlug}`;
-    }
-  } catch (e) {
-    return Promise.reject(e);
-  }
-};
-
 /**
  * This is the main template. It can have any name as long as it's the default export.
  * The props passed in here are the direct result from `getStaticProps`.
@@ -115,14 +84,6 @@ const Static: Template<TemplateRenderProps> = ({
 }: TemplateRenderProps) => {
   const _site = document._site;
 
-  const handleFilterSelect = (params: OnSelectParams) => {
-    fetchSlugForLocationByNeighborhood(params.newDisplayName).then(
-      (response) => {
-        console.log(response);
-      }
-    );
-  };
-
   return (
     <SearchExperience>
       <PageLayout>
@@ -130,30 +91,7 @@ const Static: Template<TemplateRenderProps> = ({
           <h1 className="text-white text-3xl font-semibold">
             Turtlehead Tacos
           </h1>
-          {/* <SearchBar
-            customCssClasses={{ searchBarContainer: "mt-6" }}
-            hideRecentSearches
-            visualAutocompleteConfig={{
-              entityPreviewSearcher,
-              renderEntityPreviews: EntityPreviews,
-              includedVerticals: ["locations"],
-              entityPreviewsDebouncingTime: 0,
-            }}
-          /> */}
-          <FilterSearch
-            customCssClasses={{
-              highlighted: "text-orange font-semibold",
-              nonHighlighted: "text-black",
-              option: "text-left",
-            }}
-            searchFields={[
-              {
-                entityType: "location",
-                fieldApiName: "neighborhood",
-              },
-            ]}
-            onSelect={handleFilterSelect}
-          />
+          {/* filtersearch */}
         </Banner>
         <div className="centered-container">
           <div className="text-5xl font-bold text-orange p-10 flex items-center justify-center flex-col gap-x-14 gap-y-10 md:flex-row">
