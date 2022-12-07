@@ -6,10 +6,10 @@ import {
 } from "@yext/search-headless-react";
 
 const searcher = provideHeadless({
-  apiKey: "YOUR_API_KEY",
-  experienceKey: "YOUR_EXPERIENCE_KEY",
+  apiKey: "797c677bfccd5cea5e3a63f9ec67928a",
+  experienceKey: "turtlehead",
   locale: "en",
-  // verticalKey: "locations",
+  verticalKey: "locations",
   endpoints: SandboxEndpoints,
 });
 

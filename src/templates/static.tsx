@@ -92,6 +92,20 @@ const Static: Template<TemplateRenderProps> = ({
             Turtlehead Tacos
           </h1>
           {/* filtersearch */}
+          <FilterSearch
+            customCssClasses={{
+              highlighted: "text-orange font-semibold",
+              nonHighlighted: "text-black",
+              option: "text-left",
+            }}
+            searchFields={[
+              {
+                entityType: "location",
+                fieldApiName: "neighborhood",
+              },
+            ]}
+            onSelect={handleFilterSelect}
+          />
         </Banner>
         <div className="centered-container">
           <div className="text-5xl font-bold text-orange p-10 flex items-center justify-center flex-col gap-x-14 gap-y-10 md:flex-row">
